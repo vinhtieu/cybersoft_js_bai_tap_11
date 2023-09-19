@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { VIEW_PRODUCT } from "./redux";
 
-export default class Product extends Component {
+class Product extends Component {
   render() {
     let {
       id,
@@ -25,7 +27,7 @@ export default class Product extends Component {
           flexShrink: "0",
         }}
         onClick={() => {
-          this.props.onSelect(this.props.shoes);
+          this.props.handleViewProduct(this.props.shoes);
         }}>
         <figure style={{ height: "45%" }}>
           <img
@@ -51,3 +53,17 @@ export default class Product extends Component {
     );
   }
 }
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    handleViewProduct: (payload) => {
+      let action = {
+        type: VIEW_PRODUCT,
+        payload,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(mapDispatchToProps)(Product);

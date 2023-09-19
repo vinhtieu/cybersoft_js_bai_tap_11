@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { ADD_PRODUCT } from "./redux";
 
-export default class ProductOverview extends Component {
+class ProductOverview extends Component {
   render() {
     let {
       id,
@@ -12,7 +14,7 @@ export default class ProductOverview extends Component {
       shortDescription,
       quantity,
       image,
-    } = this.props.selectedProduct;
+    } = this.props.viewedProduct;
     return (
       <div
         className="row p-2"
@@ -58,8 +60,7 @@ export default class ProductOverview extends Component {
               background: "#ffe001",
             }}
             onClick={() => {
-              const product = { ...this.props.selectedProduct, quantity: "1" };
-              this.props.addProduct(product);
+              this.props.handleAddProduct(this.props.viewedProduct);
             }}>
             Add to cart
           </button>
@@ -68,3 +69,23 @@ export default class ProductOverview extends Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    viewedProduct: state.productOverview,
+  };
+};
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    handleAddProduct: (payload) => {
+      let action = {
+        type: ADD_PRODUCT,
+        payload,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductOverview);

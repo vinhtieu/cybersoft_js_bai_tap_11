@@ -1,15 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Product from "./product.js";
-export default class ProductGrid extends Component {
+class ProductGrid extends Component {
   renderProductGridHTML = (array) => {
     return array.map((product) => {
-      return (
-        <Product
-          onSelect={this.props.selectProduct}
-          key={product.id}
-          shoes={product}
-        />
-      );
+      return <Product key={product.id} shoes={product} />;
     });
   };
 
@@ -25,8 +20,16 @@ export default class ProductGrid extends Component {
           borderRadius: "8px",
           boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
         }}>
-        {this.renderProductGridHTML(this.props.shoesList)}
+        {this.renderProductGridHTML(this.props.productList)}
       </div>
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    productList: state.productList,
+  };
+};
+
+export default connect(mapStateToProps)(ProductGrid);

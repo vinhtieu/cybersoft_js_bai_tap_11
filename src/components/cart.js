@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import CartItem from "./cartItem.js";
+import { connect } from "react-redux";
 
-export default class Cart extends Component {
+class Cart extends Component {
   renderCartItemHTML = (array) => {
     return array.map((product, currIndex) => {
-      return (
-        <CartItem
-          onDelete={this.props.deleteProduct}
-          onIncrease={this.props.increaseProduct}
-          onDecrease={this.props.decreaseProduct}
-          key={currIndex}
-          product={product}
-        />
-      );
+      return <CartItem key={currIndex} product={product} />;
     });
   };
 
@@ -31,9 +24,17 @@ export default class Cart extends Component {
             marginBlock: "20px",
             overflowX: "auto",
           }}>
-          {this.renderCartItemHTML(this.props.item)}
+          {this.renderCartItemHTML(this.props.number)}
         </div>
       </div>
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    number: state.cartItems,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);

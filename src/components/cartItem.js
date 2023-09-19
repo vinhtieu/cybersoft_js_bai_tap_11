@@ -1,17 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { DECREASE_AMOUNT, DELETE_PRODUCT, INCREASE_AMOUNT } from "./redux";
 
-export default class CartItem extends Component {
+class CartItem extends Component {
   render() {
-    let {
-      id,
-      name,
-      alias,
-      price,
-      description,
-      shortDescription,
-      quantity,
-      image,
-    } = this.props.product;
+    console.log(this.props);
     return (
       <div
         style={{
@@ -29,7 +22,7 @@ export default class CartItem extends Component {
         }}>
         <figure style={{ width: "200px", height: "150px", margin: "0" }}>
           <img
-            src={image}
+            src={this.props.product.image}
             alt="..."
             style={{
               width: "100%",
@@ -48,7 +41,7 @@ export default class CartItem extends Component {
               fontSize: "22px",
               marginBottom: "3rem",
             }}>
-            {name}
+            {this.props.product.name}
           </h5>
           <div style={{ marginBottom: "16px" }}>
             <button
@@ -63,7 +56,7 @@ export default class CartItem extends Component {
                 border: "none",
               }}
               onClick={() => {
-                this.props.onDecrease(this.props.product);
+                this.props.handleDecreaseAmount(this.props.product);
               }}>
               -
             </button>
@@ -76,7 +69,7 @@ export default class CartItem extends Component {
                 border: "1px solid black",
                 textAlign: "center",
               }}>
-              {quantity}
+              {this.props.product.amount}
             </span>
             <button
               style={{
@@ -89,12 +82,12 @@ export default class CartItem extends Component {
                 border: "none",
               }}
               onClick={() => {
-                this.props.onIncrease(this.props.product);
+                this.props.handleIncreaseAmount(this.props.product);
               }}>
               +
             </button>
           </div>
-          <div style={{ fontWeight: "500" }}>{price} $</div>
+          <div style={{ fontWeight: "500" }}>{this.props.product.price} $</div>
         </div>
         <div
           style={{
@@ -115,7 +108,7 @@ export default class CartItem extends Component {
                 overflow: "hidden",
               }}
               onClick={() => {
-                this.props.onDelete(this.props.product);
+                this.props.handleDeleteProduct(this.props.product);
               }}
               viewBox="0 0 1024 1024"
               version="1.1"
@@ -128,3 +121,31 @@ export default class CartItem extends Component {
     );
   }
 }
+
+let mapDispatchToProps = (dispatch) => {
+  return {
+    handleDeleteProduct: (payload) => {
+      let action = {
+        type: DELETE_PRODUCT,
+        payload,
+      };
+      dispatch(action);
+    },
+    handleIncreaseAmount: (payload) => {
+      let action = {
+        type: INCREASE_AMOUNT,
+        payload,
+      };
+      dispatch(action);
+    },
+    handleDecreaseAmount: (payload) => {
+      let action = {
+        type: DECREASE_AMOUNT,
+        payload,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(mapDispatchToProps)(CartItem);
