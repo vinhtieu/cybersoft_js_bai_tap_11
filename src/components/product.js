@@ -54,6 +54,10 @@ class Product extends Component {
   }
 }
 
+let mapStateToProps = (state) => {
+  return {};
+};
+
 let mapDispatchToProps = (dispatch) => {
   return {
     handleViewProduct: (payload) => {
@@ -66,4 +70,4 @@ let mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

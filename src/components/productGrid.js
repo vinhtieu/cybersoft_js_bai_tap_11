@@ -32,4 +32,8 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ProductGrid);
+let mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductGrid);

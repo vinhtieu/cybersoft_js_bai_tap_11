@@ -4,7 +4,6 @@ import { DECREASE_AMOUNT, DELETE_PRODUCT, INCREASE_AMOUNT } from "./redux";
 
 class CartItem extends Component {
   render() {
-    console.log(this.props);
     return (
       <div
         style={{
@@ -121,6 +120,9 @@ class CartItem extends Component {
     );
   }
 }
+let mapStateToProps = (state) => {
+  return {};
+};
 
 let mapDispatchToProps = (dispatch) => {
   return {
@@ -148,4 +150,4 @@ let mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapDispatchToProps)(CartItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
